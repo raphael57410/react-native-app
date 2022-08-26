@@ -1,4 +1,4 @@
-import notifee, { AuthorizationStatus } from "@notifee/react-native";
+import notifee, {  AuthorizationStatus } from "@notifee/react-native";
 import { setSettingsModal } from "../ressources/modal/settingsModal";
 
 async function Notification(text:string,description:string) {

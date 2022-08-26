@@ -26,7 +26,7 @@ const CameraView = ({navigation}) => {
                const photo = await camera.current!.takePhoto()
                setPicture(photo)
                 navigation.goBack()
-                await Notification("PHOTO","Merci d'avoir prit une photo !")
+                await Notification("PHOTO","Merci d'avoir pris une photo ! &#127881")
                 }
             }}>
             </Pressable>

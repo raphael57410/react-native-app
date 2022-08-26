@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {
-    useColorScheme,
     View,
     Text,
     ScrollView,
     StyleSheet,
-    TouchableOpacity,
-    Modal,
-    Linking, Image, Button,
+     Image, Button,
 } from "react-native";
 import Colors from "../Colors";
 import Geolocation, { GeoPosition } from "react-native-geolocation-service";
 import MapView, { Circle, Marker } from "react-native-maps";
 import { Camera } from "react-native-vision-camera";
 import { usePicture } from "../ressources/picture/picutre";
-import { ModalComponent } from "../Components/ModalComponent";
 import { setSettingsModal } from "../ressources/modal/settingsModal";
 
 const DetailTravel = ({route,navigation}) => {
-    const isDarkmode = useColorScheme() === "dark";
     const [location,setLocation] = useState<GeoPosition>();
-    const [modalVisible,setModalVisible] = useState(false);
     const user = route.params
     const picture = usePicture()
 
@@ -71,11 +65,13 @@ const DetailTravel = ({route,navigation}) => {
                             navigation.navigate("Camera")
                         }else {
                             const newCameraPermission = await Camera.requestCameraPermission();
-                            if (newCameraPermission === "denied") setModalVisible(true);
+                            if (newCameraPermission === "denied") setSettingsModal(true);
                         }
                     }}></Button>
             </View>
-            {picture && <Image source={{ uri: `file://${picture?.path}` }} style={{ height: 100, width: 100 }}/>}
+            <View style={styles.imageContainer}>
+            {picture && <Image resizeMode={"center"} source={{ uri: `file://${picture?.path}` }} style={{ borderRadius:20, height: 100, width: 100 }}/>}
+            </View>
         </ScrollView>
     );
 }
@@ -99,7 +95,7 @@ const styles = StyleSheet.create({
         textAlign:"center",
     },
     cameraContainer:{
-        height:300,
+        height:200,
         alignItems:"center",
         justifyContent:"center",
     },
@@ -109,6 +105,11 @@ const styles = StyleSheet.create({
         borderColor:Colors.primary,
         borderRadius:20,
 
+    },
+    imageContainer:{
+      display:"flex",
+      alignItems:"center",
+      height:"100%",
     },
     map: {
         height:200,
